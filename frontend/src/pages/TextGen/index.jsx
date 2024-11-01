@@ -94,7 +94,7 @@ function TextGen() {
                             dangerouslySetInnerHTML={createMarkup()}
                         ></div>
                         <div className={styles.taxonomy}>
-                            Taxonomy suggestions: <br />
+                            <span>Taxonomy suggestion:</span> <br />
                             {taxonomy}
                         </div>
                     </div>
