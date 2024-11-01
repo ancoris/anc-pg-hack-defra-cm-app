@@ -88,11 +88,14 @@ def generate(
     ),
 )
 def generateDocuments(req: https_fn.CallableRequest) -> Any:
-    print("req.data: ", req.data)
+    print("START req.data: ", req.data)
     statement = req.data.get("request", "")
     fileUrl = req.data.get("fileUrl", "")
+    contentType = req.data.get("contentType", "")
     style_guide_gcs_uri = (
-        "gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf"
+        contentType
+        if contentType
+        else ("gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf")
     )
     prompt = Prompt(fileUrl, style_guide_gcs_uri, statement)
     # model = get_model()
