@@ -1,0 +1,25 @@
+.tabsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: left;
+
+    .tabsWrapper {
+        width: 100%;
+        background-color: var(--btn-back-color);
+
+        & > button {
+            padding: 20px;
+        }
+    }
+
+    .active {
+        background-color: white;
+        border: 1px solid var(--btn-back-color);
+        color: var(--btn-back-color);
+    }
+}
+
+.outlet {
+    background-color: white;
+}
