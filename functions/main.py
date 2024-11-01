@@ -79,7 +79,7 @@ def generate(
     memory=512,
     cors=CorsOptions(
         cors_origins=[
-            "https://defra-hackathon-examples.web.app",
+            "https://anc-pg-hack-defra-cm.web.app",
             "http://localhost:5173",
             "http://localhost:5000",
         ],
@@ -91,7 +91,7 @@ def generateDocuments(req: https_fn.CallableRequest) -> Any:
     statement = req.data.get("request", "")
     fileUrl = req.data.get("fileUrl", "")
     style_guide_gcs_uri = (
-        "gs://defra-hackathon-examples.appspot.com/example_docs/defra style guide.pdf"
+        "gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf"
     )
     prompt = Prompt(fileUrl, style_guide_gcs_uri, statement)
     # model = get_model()
