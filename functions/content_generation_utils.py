@@ -4,21 +4,30 @@ from vertexai.generative_models import GenerativeModel, Part
 
 
 # Task instruction
-INSTRUCTION_1 = """Correct the draft article according to the GOV.UK writing guide provided.
+INSTRUCTION_1 = """Correct the draft article according to the instructions and the GOV.UK writing guide provided.
 Tailor the content to the content-type specification provided.
 Use the style guide as complementary rules.
 Output in Markdown format, with only the revised draft article, without explanations or comments.
 """
 INSTRUCTION_1_ALT = """Correct the draft article according to the instructions and the GOV.UK writing guide provided.
 Tailor the content to the content-type specification provided.
-Use the style guide as complementary rules.
+Use the style guide and acceptance criteria as complementary guide.
 Output in Markdown format, with only the revised draft article, without explanations or comments.
-**Instructions (JSON):**
 """
-INSTRUCTION_2 = "**GOV.UK writing guide (PDF):**"
-INSTRUCTION_3 = "**Content-type specification (PDF):**"
-INSTRUCTION_4 = "**Style Guide (PDF):**"
-INSTRUCTION_5 = "**Draft Article (PDF):**"
+INSTRUCTION_2 = """**Instructions (JSON):**
+{
+"voice": "use the active voice",
+"title": "use sentence case: capitalize just the first letter of the first word in the title and use lowercase for the rest words",
+"audience": "write for a reading age of 10",
+"headings": "use ONLY statement form in headings",
+"bullet points": "use lowercase at the start of any bullet point, for example, '*use lowercase' instead of '*Use lowercase'"
+}
+"""
+INSTRUCTION_3 = "**GOV.UK writing guide (PDF):**"
+INSTRUCTION_4 = "**Content-type specification (PDF):**"
+INSTRUCTION_5 = "**Style Guide (PDF):**"
+INSTRUCTION_6 = "**Acceptance criteria (TEXT):**"
+INSTRUCTION_7 = "**Draft Article (PDF):**"
 
 WRITING_GUIDE_URI = "gs://anc-pg-hack-defra-cm.appspot.com/writing_for_gov_uk.pdf"
 STYLE_GUIDE_URI = (
@@ -55,35 +64,34 @@ class Prompt:
     def get(self):
         prompt = None
         if self.additional_instructions:
-            prompt = [INSTRUCTION_1_ALT, self.additional_instructions]
-        else:
-            prompt = [INSTRUCTION_1]
-
-        self.string_prompt = [*prompt]
-        prompt.extend(
-            [
+            prompt = [
+                INSTRUCTION_1_ALT,
                 INSTRUCTION_2,
-                self.writing_guide,
                 INSTRUCTION_3,
-                self.content_type_guide,
+                self.writing_guide,
                 INSTRUCTION_4,
-                self.style_guide,
+                self.content_type_guide,
                 INSTRUCTION_5,
+                self.style_guide,
+                INSTRUCTION_6,
+                self.additional_instructions,
+                INSTRUCTION_7,
                 self.source_material,
             ]
-        )
-        # self.string_prompt.extend(
-        #     [
-        #         INSTRUCTION_2,
-        #         WRITING_GUIDE_URI.split("/")[-1],
-        #         INSTRUCTION_3,
-        #         self.content_type_guide.split("/")[-1],
-        #         INSTRUCTION_4,
-        #         self.style_guide.split("/")[-1],
-        #         INSTRUCTION_5,
-        #         self.source_material.split("/")[-1],
-        #     ]
-        # )
+        else:
+            prompt = [
+                INSTRUCTION_1,
+                INSTRUCTION_2,
+                INSTRUCTION_3,
+                self.writing_guide,
+                INSTRUCTION_4,
+                self.content_type_guide,
+                INSTRUCTION_5,
+                self.style_guide,
+                INSTRUCTION_7,
+                self.source_material,
+            ]
+
         self.string_prompt = ""
         print("prompt", prompt)
         print("string_prompt", self.string_prompt)

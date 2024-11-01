@@ -34,7 +34,7 @@ button {
     font-size: 1rem;
     background-color: var(--btn-back-color);
     color: var(--btn-front-color);
-    border: 1px solid var(--btn-back-color);
+    /* border: 1px solid var(--btn-back-color); */
     padding: 1rem 0.5rem;
     cursor: pointer;
     transition: color 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),

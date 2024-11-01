@@ -85,8 +85,17 @@
 
 .button {
     padding: 10px 20px;
-    background-color: var(--btn-back-color);
+    background-color: #00703c;
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
     width: 400px;
+}
+.button:hover {
+    background-color: #005a30; /* Darker green on hover */
+    border-color: #0b0c0c;
+}
+
+.button:disabled {
+    background-color: #b1b4b6; /* Greyed out when disabled */
+    cursor: not-allowed;
 }
