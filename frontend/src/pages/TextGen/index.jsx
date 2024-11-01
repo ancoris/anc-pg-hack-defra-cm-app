@@ -5,7 +5,7 @@ import { marked } from "marked";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const DEFAULT_CONTENT_TYPE =
-    "gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf";
+    "gs://anc-pg-hack-defra-cm.appspot.com/content_type_policies_example - detailed guide.pdf";
 
 function TextGen() {
     const [inputText, setInputText] = useState("");
@@ -14,11 +14,12 @@ function TextGen() {
     const [loading, setLoading] = useState(false);
     const [promptUsed, setPromptUsed] = useState(""); //unused for now
     const [contentType, setContentType] = useState(DEFAULT_CONTENT_TYPE);
+    const [taxonomy, setTaxonomy] = useState("");
 
     const functions = getFunctions();
     const storage = getStorage();
 
-    const bucketName = "example_docs";
+    const bucketName = "uploaded_docs";
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -51,6 +52,7 @@ function TextGen() {
             }).then((result) => {
                 console.log(result.data);
                 setOutputText(result.data.generated_draft);
+                setTaxonomy(result.data.taxonomy);
                 setLoading(false);
             });
         } catch (error) {
@@ -79,17 +81,23 @@ function TextGen() {
                             value={contentType}
                             onChange={(e) => setContentType(e.target.value)}
                         >
-                            <option value="gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf">
-                                Defra Style Guide
+                            <option value="gs://anc-pg-hack-defra-cm.appspot.com/content_type_policies_example - detailed guide.pdf">
+                                Detailed Guide Content Type Example
                             </option>
                             <option value="Type Bbbbb">Type B</option>
                             <option value="Type Cccccc">Type C</option>
                         </select>
                     </div>
-                    <div
-                        className={styles.output_box}
-                        dangerouslySetInnerHTML={createMarkup()}
-                    ></div>
+                    <div>
+                        <div
+                            className={styles.output_box}
+                            dangerouslySetInnerHTML={createMarkup()}
+                        ></div>
+                        <div className={styles.taxonomy}>
+                            <span>Taxonomy suggestion:</span> <br />
+                            {taxonomy}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div></div>

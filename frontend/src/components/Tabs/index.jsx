@@ -17,18 +17,20 @@ const Tabs = () => {
                     Text Generation
                 </button>
                 <button
-                    className={activeTab === "taxonomy" ? styles.active : ""}
+                    className={
+                        activeTab === "vertexSearch" ? styles.active : ""
+                    }
                     onClick={() => {
-                        setActiveTab("taxonomy");
+                        setActiveTab("vertexSearch");
                     }}
                 >
-                    Taxonomy
+                    Vertex Search (TBD)
                 </button>
             </div>
 
             <div className="outlet">
                 {activeTab === "textGen" && <TextGen />}
-                {activeTab === "taxonomy" && <h1>Taxonomy</h1>}
+                {activeTab === "vertexSearch" && <h1>Vertex Search (TBD)</h1>}
             </div>
         </div>
     );

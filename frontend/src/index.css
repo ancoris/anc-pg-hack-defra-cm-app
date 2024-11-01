@@ -1,5 +1,7 @@
 :root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: Arial, sans-serif;
+    background-color: #f3f2f1;
+    color: #0b0c0c;
     line-height: 1.5;
     font-weight: 400;
 
@@ -32,7 +34,7 @@ button {
     font-size: 1rem;
     background-color: var(--btn-back-color);
     color: var(--btn-front-color);
-    border: 1px solid var(--btn-back-color);
+    /* border: 1px solid var(--btn-back-color); */
     padding: 1rem 0.5rem;
     cursor: pointer;
     transition: color 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),

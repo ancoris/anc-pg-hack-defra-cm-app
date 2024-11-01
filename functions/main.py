@@ -5,7 +5,8 @@ from typing import Any
 from firebase_admin import initialize_app
 from firebase_functions import https_fn
 from firebase_functions.options import CorsOptions
-from content_generation_utils import Prompt, get_model, run_generation
+from content_generation_utils import Prompt, run_generation
+from tagging_generation_utils import get_tagging
 import vertexai
 from vertexai.generative_models import GenerativeModel, Part, SafetySetting
 
@@ -92,18 +93,19 @@ def generateDocuments(req: https_fn.CallableRequest) -> Any:
     statement = req.data.get("request", "")
     fileUrl = req.data.get("fileUrl", "")
     contentType = req.data.get("contentType", "")
-    style_guide_gcs_uri = (
-        contentType
-        if contentType
-        else ("gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf")
-    )
-    prompt = Prompt(fileUrl, style_guide_gcs_uri, statement)
+
+    prompt = Prompt(fileUrl, contentType, statement)
     # model = get_model()
     # config = get_generation_config()
     # safety_settings = get_safety_settings()
     # output = generate(statement, model, config, safety_settings, fileUrl)
     generated_draft = run_generation(prompt)
-    return {"generated_draft": generated_draft, "prompt": prompt.string_prompt}
+    tagging = get_tagging(fileUrl)
+    return {
+        "generated_draft": generated_draft,
+        "prompt": prompt.string_prompt,
+        "taxonomy": tagging,
+    }
 
 
 # Initialize services
