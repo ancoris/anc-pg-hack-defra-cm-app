@@ -4,12 +4,16 @@ import { getFunctions, httpsCallable } from "firebase/functions";
 import { marked } from "marked";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+const DEFAULT_CONTENT_TYPE =
+    "gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf";
+
 function TextGen() {
     const [inputText, setInputText] = useState("");
     const [outputText, setOutputText] = useState("");
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [promptUsed, setPromptUsed] = useState("");
+    const [promptUsed, setPromptUsed] = useState(""); //unused for now
+    const [contentType, setContentType] = useState(DEFAULT_CONTENT_TYPE);
 
     const functions = getFunctions();
     const storage = getStorage();
@@ -40,13 +44,15 @@ function TextGen() {
                 "generateDocuments"
             );
 
-            generateDocuments({ request: inputText, fileUrl: fileUrl }).then(
-                (result) => {
-                    console.log(result.data);
-                    setOutputText(result.data.generated_draft);
-                    setLoading(false);
-                }
-            );
+            generateDocuments({
+                request: inputText,
+                fileUrl: fileUrl,
+                contentType: contentType,
+            }).then((result) => {
+                console.log(result.data);
+                setOutputText(result.data.generated_draft);
+                setLoading(false);
+            });
         } catch (error) {
             console.error("Error calling Firebase function:", error);
         }
@@ -55,17 +61,31 @@ function TextGen() {
     const createMarkup = () => {
         return { __html: marked(outputText) };
     };
-
+    console.log("contentType", contentType);
     return (
         <div>
             <div className={styles.container}>
                 <div className={styles.boxes}>
-                    <textarea
-                        className={styles.box}
-                        value={inputText}
-                        onChange={(e) => setInputText(e.target.value)}
-                        placeholder="Enter text"
-                    />
+                    <div>
+                        <textarea
+                            className={styles.box}
+                            value={inputText}
+                            onChange={(e) => setInputText(e.target.value)}
+                            placeholder="Enter any additional instructions"
+                        />
+                        Content Type:{" "}
+                        <select
+                            className={styles.selectBox}
+                            value={contentType}
+                            onChange={(e) => setContentType(e.target.value)}
+                        >
+                            <option value="gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf">
+                                Defra Style Guide
+                            </option>
+                            <option value="Type Bbbbb">Type B</option>
+                            <option value="Type Cccccc">Type C</option>
+                        </select>
+                    </div>
                     <div
                         className={styles.output_box}
                         dangerouslySetInnerHTML={createMarkup()}
