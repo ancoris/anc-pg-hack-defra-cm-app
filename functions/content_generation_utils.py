@@ -36,7 +36,7 @@ STYLE_GUIDE_URI = (
 
 
 def get_model() -> GenerativeModel:
-    return GenerativeModel("gemini-1.5-flash-002")
+    return GenerativeModel("gemini-1.5-pro-002")
 
 
 class Prompt:
