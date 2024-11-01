@@ -6,7 +6,7 @@
 
     .tabsWrapper {
         width: 100%;
-        background-color: var(--btn-back-color);
+        padding-left: 260px;
 
         & > button {
             padding: 20px;

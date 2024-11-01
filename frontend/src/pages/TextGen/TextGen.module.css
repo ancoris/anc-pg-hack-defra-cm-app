@@ -5,6 +5,11 @@
     text-align: center;
 }
 
+img {
+    max-width: 150px;
+    margin: 0 260px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -12,7 +17,7 @@
 }
 
 .container_submit {
-    margin-left: 100px;
+    margin-left: 260px;
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -21,7 +26,7 @@
 .boxes {
     display: flex;
     gap: 20px;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
 }
 
 .button:disabled {
@@ -48,7 +53,7 @@
 }
 
 .box {
-    width: 600px;
+    width: 300px;
     height: 350px;
     border: 2px solid #b1b4b6;
     border-radius: 10px;
@@ -59,7 +64,7 @@
 }
 
 .selectBox {
-    width: 300px;
+    width: 240px;
     height: 40px;
     border: 1px solid gray;
     border-radius: 5px;
@@ -68,8 +73,8 @@
 }
 
 .output_box {
-    width: 600px;
-    height: 400px;
+    width: 550px;
+    height: 352px;
     border: 1px solid gray;
     border-radius: 10px;
     padding: 20px;
@@ -90,7 +95,7 @@
     background-color: #00703c;
     color: #ffffff;
     border: none;
-    width: 400px;
+    width: 350px;
 }
 .button:hover {
     background-color: #005a30; /* Darker green on hover */
