@@ -110,7 +110,8 @@ function TextGen() {
                 <button
                     className={styles.button}
                     onClick={handleSubmit}
-                    disabled={loading}
+                    disabled={loading || !selectedFile}
+                    title={!selectedFile ? "Please upload a file" : ""}
                 >
                     {loading ? "Loading..." : "Submit"}
                 </button>
