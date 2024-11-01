@@ -12,7 +12,7 @@ from vertexai.generative_models import GenerativeModel, Part, SafetySetting
 
 def initialize_services():
     initialize_app()
-    vertexai.init(project="defra-hackathon-examples", location="us-central1")
+    vertexai.init(project="anc-pg-hack-defra-cm", location="us-central1")
 
 
 def get_generation_config() -> dict:
@@ -80,6 +80,7 @@ def generate(
     cors=CorsOptions(
         cors_origins=[
             "https://anc-pg-hack-defra-cm.web.app",
+            "https://anc-pg-hack-defra-cm.firebaseapp.com",
             "http://localhost:5173",
             "http://localhost:5000",
         ],
@@ -99,7 +100,7 @@ def generateDocuments(req: https_fn.CallableRequest) -> Any:
     # safety_settings = get_safety_settings()
     # output = generate(statement, model, config, safety_settings, fileUrl)
     generated_draft = run_generation(prompt)
-    return {"generated_draft": generated_draft, "prompt": ""}  # TODO promp
+    return {"generated_draft": generated_draft, "prompt": prompt.string_prompt}
 
 
 # Initialize services

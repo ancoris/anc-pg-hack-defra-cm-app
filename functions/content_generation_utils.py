@@ -25,9 +25,11 @@ class Prompt:
         self.source_material = Part.from_uri(
             mime_type="application/pdf", uri=source_material_gcs_uri
         )
+        self.source_material_gcs_uri = source_material_gcs_uri
         self.style_guide = Part.from_uri(
             mime_type="application/pdf", uri=style_guide_gcs_uri
         )
+        self.style_guide_gcs_uri = style_guide_gcs_uri
         self.additional_instructions = additional_instructions
         self.string_prompt = None
 
@@ -42,10 +44,15 @@ class Prompt:
         else:
             prompt = [INSTRUCTION_1]
 
+        self.string_prompt = [*prompt]
         prompt.extend([self.style_guide, INSTRUCTION_2, self.source_material])
-        self.string_prompt = [
-            item.uri if hasattr(item, "uri") else item for item in prompt
-        ]
+        self.string_prompt.extend(
+            [
+                self.style_guide_gcs_uri.split("/")[-1],
+                INSTRUCTION_2,
+                self.source_material_gcs_uri.split("/")[-1],
+            ]
+        )
         print("prompt", prompt)
         print("prompt string_prompt", self.string_prompt)
         return prompt
