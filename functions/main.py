@@ -92,18 +92,18 @@ def generateDocuments(req: https_fn.CallableRequest) -> Any:
     statement = req.data.get("request", "")
     fileUrl = req.data.get("fileUrl", "")
     contentType = req.data.get("contentType", "")
-    style_guide_gcs_uri = (
-        contentType
-        if contentType
-        else ("gs://anc-pg-hack-defra-cm.appspot.com/style_guide_defra style guide.pdf")
-    )
-    prompt = Prompt(fileUrl, style_guide_gcs_uri, statement)
+
+    prompt = Prompt(fileUrl, contentType, statement)
     # model = get_model()
     # config = get_generation_config()
     # safety_settings = get_safety_settings()
     # output = generate(statement, model, config, safety_settings, fileUrl)
     generated_draft = run_generation(prompt)
-    return {"generated_draft": generated_draft, "prompt": prompt.string_prompt}
+    return {
+        "generated_draft": generated_draft,
+        "prompt": prompt.string_prompt,
+        "taxonomy": "to implement",
+    }
 
 
 # Initialize services
