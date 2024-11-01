@@ -44,12 +44,7 @@ button {
         fill 0.2s cubic-bezier(0.25, 0.8, 0.25, 1),
         -webkit-box-shadow 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-button:not(:disabled):hover,
-input[type="file"]:not(:disabled):hover {
-    background-color: var(--btn-front-color);
-    color: var(--btn-back-color);
-    border-color: var(--btn-back-color);
-}
+
 button:disabled,
 input[type="file"]:disabled {
     opacity: 0.5;
