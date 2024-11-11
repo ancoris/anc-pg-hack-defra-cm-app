@@ -79,7 +79,6 @@ export const Search: FunctionComponent = () => {
 
         searchWidget.setAttribute("alwaysopened", "true");
         searchWidget.setAttribute("anchorsTarget", "_blank");
-        searchWidget.setAttribute("location", "eu");
         searchWidget.style.display = "none";
         searchWidget.style.height = "100%";
         searchWidget.style.width = "100%";
